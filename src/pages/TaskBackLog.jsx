@@ -55,7 +55,7 @@ export default function TaskBackLog() {
   }
 
   return (
-    <div className="ml-[16rem] w-[calc(100%-16rem)] min-h-screen bg-[#F9FAFB] pt-0 pl-0 flex flex-col relative">
+    <div className="ml-[16rem] w-[calc(100%-16rem)] min-h-screen bg-[#F9FAFB] flex flex-col relative p-4">
       {/* Header */}
       <div className="flex justify-between items-center mb-2 flex-wrap gap-4 px-10 pt-0">
         <div className="relative w-full sm:w-[25.125rem] ml-4">

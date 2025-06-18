@@ -50,7 +50,7 @@ const EditTemplates = ({ modalTitle = "Scope Code Documentation Template" }) => 
   const openModal = () => setIsModalOpen(true);
 
   return (
-    <div className="min-h-screen flex bg-gray-100 ml-[250px] -mt-8 -mx-8">
+    <div className="min-h-screen flex bg-gray-100 ml-[250px] -mt-8 -mx-8 p-8">
       <Sidebar items={list_items} />
       
       <div className="flex-1 flex flex-col">
