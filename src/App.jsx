@@ -18,6 +18,8 @@ import Docs from './pages/Docs';
 import EmployeeList from './pages/EmployeeList';
 import Footer from './components/footer';
 import SprintBoard from './pages/Sprints';
+import Sprints from './pages/Sprints';
+import MyTasks from './pages/MyTasks';
 function App() {
   const { user,selected } = useContext(OverallContext);
   
@@ -33,14 +35,15 @@ function App() {
           
           {/* Main content area */}
           <main className="flex-1 overflow-auto">
-            <div className="p-4 sm:p-6 lg:p-8">
+            <div className="">
             <UserUpdate/><ViewReviewModal/><SeeTask/><CreateReview/><CreateTaskModal/>  {/* Overlay components create review for execs and employees only*/}
              {selected === 'overview' && <Dashboard />}
                 {selected === 'employeeList' &&  <EmployeeList />}
                 {selected === 'tasks' &&  <TaskBackLog />}
                 {selected === 'templates' && <EditTemplates/>}
                 {selected === 'docs' && <Docs/>}
-                {selected === 'sprints' && <SprintBoard/>}
+                {selected === 'sprints' && <Sprints/>}
+                {selected === 'task_current' && <MyTasks/>}
               <Routes>
 
                

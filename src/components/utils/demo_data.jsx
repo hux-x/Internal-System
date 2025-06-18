@@ -471,3 +471,67 @@ export const mockData = [
       },
     ],
   };
+  export const mytasks = {
+    "To Do": [
+      {
+        title: "Integrate payment gateway",
+        description:
+          "Set up and integrate a secure payment gateway to enable online transactions. Ensure PCI compliance and test with multiple payment providers for reliability.",
+        due: "8 days left",
+        avatar: true,
+      },
+      {
+        title: "Write unit tests for API",
+        description:
+          "Develop comprehensive unit tests for all backend API endpoints. Focus on edge cases and error handling to improve code quality and reliability.",
+        due: "10 days left",
+        avatar: true,
+      },
+      {
+        title: "Prepare product launch checklist",
+        description:
+          "Create a detailed checklist for the upcoming product launch, including marketing, technical, and operational tasks to ensure a smooth rollout.",
+        due: "12 days left",
+        avatar: true,
+      },
+    ],
+    "In Progress": [
+      {
+        title: "Refactor legacy codebase",
+        description:
+          "Refactor and modularize the legacy codebase to improve maintainability and scalability. Remove deprecated dependencies and update documentation.",
+        due: "4 days left",
+        avatar: true,
+      },
+      {
+        title: "Implement dark mode",
+        description:
+          "Add dark mode support to the web application. Ensure all UI components are styled appropriately and provide a toggle for users.",
+        due: "6 days left",
+        avatar: true,
+      },
+    ],
+    "In Review": [
+      {
+        title: "Optimize image loading",
+        description:
+          "Review and approve optimizations for image loading, including lazy loading and compression, to enhance site performance.",
+        done: true,
+        avatar: true,
+      },
+      {
+        title: "Update user profile page",
+        description:
+          "Check the redesigned user profile page for usability and consistency with the new design system before deployment.",
+        done: true,
+        avatar: true,
+      },
+      {
+        title: "Migrate database to cloud",
+        description:
+          "Review the migration process and results for moving the database to a cloud provider. Ensure data integrity and minimal downtime.",
+        done: true,
+        avatar: true,
+      },
+    ],
+  };

@@ -23,10 +23,11 @@ export const OverallContextProvider = ({ children }) => {
     const [taskLogData, setTaskLogData] = useState([]); // for storing task log data
     const [selectedTemplate, setSelectedTemplate] = useState('/templates/resume.pdf'); // for storing selected template data
     const [sprints,setSprints] = useState([]);
+    const [myTasks,setMyTasks] = useState({});
 
   
   return (
-    <OverallContext.Provider value={{sprints,setSprints,isAddEmployeeModalOpen, setIsAddEmployeeModalOpen,taskLogData,setTaskLogData,employeeData,setEmployeeData,viewTask, setViewTask,user,setUser,selected, setSelected,openSidebar, setOpenSidebar,isModalOpen, setIsModalOpen,reviewModal,setReviewModal,currentReviewData, setCurrentReviewData,openCTaskModal, setOpenCTaskModal,taskData, setTaskData,reviewTask,setreviewTask,selectedTemplate,setSelectedTemplate}}>
+    <OverallContext.Provider value={{myTasks,setMyTasks,sprints,setSprints,isAddEmployeeModalOpen, setIsAddEmployeeModalOpen,taskLogData,setTaskLogData,employeeData,setEmployeeData,viewTask, setViewTask,user,setUser,selected, setSelected,openSidebar, setOpenSidebar,isModalOpen, setIsModalOpen,reviewModal,setReviewModal,currentReviewData, setCurrentReviewData,openCTaskModal, setOpenCTaskModal,taskData, setTaskData,reviewTask,setreviewTask,selectedTemplate,setSelectedTemplate}}>
       {children}
     </OverallContext.Provider>
   );
