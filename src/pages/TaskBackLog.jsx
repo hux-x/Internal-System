@@ -13,7 +13,7 @@ export default function TaskBackLog() {
   
   const [search, setSearch] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 11;
+  const itemsPerPage = 14;
   const { 
   
     employeeData,

@@ -7,6 +7,7 @@ import { mockData } from '../components/utils/demo_data';
 import CreateEmployeeModal from '../components/blocks/createemployee';
 import { OverallContext } from '../components/context/Overall';
 import EmployeeTable from '../components/reusable/ReusableTable';
+import Footer from '../components/footer';
 
 export default function EmployeeList() {
   const [search, setSearch] = useState('');
@@ -138,6 +139,7 @@ export default function EmployeeList() {
           </div>
         </div>
       )}
+      <Footer/>
     </div>
   );
 }

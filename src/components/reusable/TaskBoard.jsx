@@ -39,7 +39,7 @@ const TaskBoard = ({title,data,setData}) => {
 
   return (
     <div className={boardClasses}> 
-      <div className='mx-10 w-[120vw]'>
+      <div className='mx-10 w-[120vw] mt-2'>
         <h1 className={headerClasses}>
           {title} <span className="text-gray-400">0001</span>
         </h1>
