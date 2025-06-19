@@ -18,24 +18,14 @@ const TaskBoard = ({title,data,setData}) => {
     setData(data);
   }, [setData]);
 
-  const handleAddGroup = (group) => {
-    setData(prev => [...prev, group]);
-  };
 
-  const handleAddCard = (category, newCard) => {
-    setData(prev => ({
-      ...prev,
-      [category]: [...prev[category], newCard]
-    }));
-  };
 
   const boardClasses = "-mt-4 sm:-mt-6  overflow-x-hidden";
   const headerClasses = "text-4xl font-extrabold mb-4 mx-60 bg-white p-8 w-4/5";
   const containerClasses = "flex flex-wrap gap-4 mx-80 w-4/5";
   const columnClasses = "w-full md:w-1/4 h-[190] rounded-lg flex flex-col gap-4";
   const cardClasses = "border border-[#EFF0F1] rounded-[15px] p-6 bg-white min-h-fit flex flex-col";
-  const addCardButtonClasses = "text-center w-full border border-dashed border-gray-300 py-2 rounded-[15px] text-sm text-black-500 hover:bg-gray-50";
-  const addGroupClasses = "w-full md:w-[315px] h-[190px] border-dashed border-2 border-gray-300 rounded-[15px] flex items-center justify-center text-3xl text-gray-800 cursor-pointer hover:bg-gray-50";
+
 
   return (
     <div className={boardClasses}> 
@@ -62,7 +52,7 @@ const TaskBoard = ({title,data,setData}) => {
               >
                 <div className="flex justify-between items-center">
                   <h2 className="font-semibold text-sm">{card.title}</h2>
-                  <FaExternalLinkAlt className="text-xs text-black-500" />
+                  <FaExternalLinkAlt className="text-s text-black-800" />
                 </div>
                 <p className="text-16 text-gray-500 leading-tight mt-2 flex-grow overflow-hidden mb-2">
                   {card.description}
@@ -90,22 +80,11 @@ const TaskBoard = ({title,data,setData}) => {
               </div>
             ))}
 
-            <button 
-              className={addCardButtonClasses}
-            >
-              + Add another card
-            </button>
+          
           </div>
         ))}
         
-        <div>
-          <h2 className='text-gray-900 mb-4'>Add another group</h2>
-          <div 
-            className={addGroupClasses}
-          >
-            +
-          </div>
-        </div>
+    
       </div>
     </div>
   );

@@ -12,7 +12,7 @@ const Navbar = () => {
   const openModal = () => {setIsModalOpen(true); console.log("Modal should open");};
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 h-16 flex-shrink-0">
+    <header className="bg-white shadow-sm border-b border-gray-200 h-[7vh] flex-shrink-0">
       <div className="flex items-center justify-between px-6 h-full">
         <div className="flex items-center space-x-4 cursor-pointer" onClick={() => setOpenSidebar(!openSidebar)}>
           <img src={logo} alt="Logo" className="h-8 w-auto object-contain" />

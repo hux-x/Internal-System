@@ -16,10 +16,9 @@ import TaskBackLog from './pages/TaskBackLog';
 import EditTemplates from './pages/EditTemplates';
 import Docs from './pages/Docs';
 import EmployeeList from './pages/EmployeeList';
-import Footer from './components/footer';
-import SprintBoard from './pages/Sprints';
 import Sprints from './pages/Sprints';
 import MyTasks from './pages/MyTasks';
+import PerformanceReview from './pages/PerformanceReview';
 function App() {
   const { user,selected } = useContext(OverallContext);
   
@@ -44,6 +43,7 @@ function App() {
                 {selected === 'docs' && <Docs/>}
                 {selected === 'sprints' && <Sprints/>}
                 {selected === 'task_current' && <MyTasks/>}
+                {selected === 'performancereviews' && <PerformanceReview/>}
               <Routes>
 
                

@@ -1,4 +1,4 @@
-const SectionBlock = ({ fields }) => {
+const SectionBlock = ({ fields, title }) => {
   const handleTextareaChange = (e) => {
     const textarea = e.target;
     const lines = textarea.value.split('\n').map(line => {
@@ -20,6 +20,7 @@ const SectionBlock = ({ fields }) => {
 
   return (
     <div className="mb-8">
+      {title && <h2 className="text-2xl font-semibold text-black mb-4">{title}</h2>}
       <div className="space-y-5">
         {fields.map((field, index) => (
           <div key={index}>
@@ -55,5 +56,4 @@ const SectionBlock = ({ fields }) => {
     </div>
   );
 };
-
 export default SectionBlock;

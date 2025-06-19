@@ -72,7 +72,10 @@ const Sidebar = () => {
         
           <div onClick={() => setSelected("tasks")} className={getSidebarItemClass("tasks",selected)}>
                       <HiCollection  size={18}/> Task Back Log
-                    </div>
+          </div>
+          <div onClick={() => setSelected("performancereviews")} className={getSidebarItemClass("performancereviews",selected)}>
+                      <HiCollection  size={18}/> Performance Reviews
+          </div>
         </nav>
       </div>
     </aside>)}

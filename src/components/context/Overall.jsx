@@ -24,10 +24,13 @@ export const OverallContextProvider = ({ children }) => {
     const [selectedTemplate, setSelectedTemplate] = useState('/templates/resume.pdf'); // for storing selected template data
     const [sprints,setSprints] = useState([]);
     const [myTasks,setMyTasks] = useState({});
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [postRequestBody,setPostRequestBody] = useState({})   //will be used for sending post requests
+    
 
   
   return (
-    <OverallContext.Provider value={{myTasks,setMyTasks,sprints,setSprints,isAddEmployeeModalOpen, setIsAddEmployeeModalOpen,taskLogData,setTaskLogData,employeeData,setEmployeeData,viewTask, setViewTask,user,setUser,selected, setSelected,openSidebar, setOpenSidebar,isModalOpen, setIsModalOpen,reviewModal,setReviewModal,currentReviewData, setCurrentReviewData,openCTaskModal, setOpenCTaskModal,taskData, setTaskData,reviewTask,setreviewTask,selectedTemplate,setSelectedTemplate}}>
+    <OverallContext.Provider value={{postRequestBody,setPostRequestBody,showReviewModal, setShowReviewModal,myTasks,setMyTasks,sprints,setSprints,isAddEmployeeModalOpen, setIsAddEmployeeModalOpen,taskLogData,setTaskLogData,employeeData,setEmployeeData,viewTask, setViewTask,user,setUser,selected, setSelected,openSidebar, setOpenSidebar,isModalOpen, setIsModalOpen,reviewModal,setReviewModal,currentReviewData, setCurrentReviewData,openCTaskModal, setOpenCTaskModal,taskData, setTaskData,reviewTask,setreviewTask,selectedTemplate,setSelectedTemplate}}>
       {children}
     </OverallContext.Provider>
   );
