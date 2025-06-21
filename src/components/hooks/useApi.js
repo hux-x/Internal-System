@@ -1,25 +1,30 @@
 import { useState, useCallback, useContext } from 'react';
 import { OverallContext } from '../context/Overall';
 
-const BASE_URL = 'https://internal.bewhoop.com/api';
+
+const BASE_URL = 'https://affan2493.pythonanywhere.com/api';
 
 const useApi = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const {postRequestBody} = useContext(OverallContext);
+  const {role,setRole} = useContext(OverallContext)
+  
 
-  const request = useCallback(async ({ endpoint, method = 'GET', headers = {}, body = postRequestBody, params = {} }) => {
+  const request = useCallback(async ({ endpoint, method = 'GET', headers = {}, body = null, params = {} }) => {
     setLoading(true);
     setError(null);
 
     try {
       const queryString = new URLSearchParams(params).toString();
       const url = `${BASE_URL}${endpoint}${queryString ? `?${queryString}` : ''}`;
+      localStorage.setItem("session_token",'9219a6158cbecde4edf04fcc7af5245ca47b01ba'); //for testing
+      const session_token = localStorage.getItem('session_token')
 
       const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
+          'Authorization':  `Token ${session_token}`,
           ...headers,
         },
         body: body ? JSON.stringify(body) : null,
@@ -33,7 +38,13 @@ const useApi = () => {
       if (!response.ok) {
         throw new Error(data?.message || response.statusText);
       }
-
+      console.log(body)
+      console.log(data)
+      if(data.token && data.role){
+        localStorage.setItem('session_token',data.token)
+        localStorage.setItem('role',data.role)
+        setRole(data.role)
+      }
       return data;
     } catch (err) {
       setError(err.message || 'Something went wrong');

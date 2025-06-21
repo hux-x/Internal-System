@@ -19,6 +19,7 @@ import EmployeeList from './pages/EmployeeList';
 import Sprints from './pages/Sprints';
 import MyTasks from './pages/MyTasks';
 import PerformanceReview from './pages/PerformanceReview';
+import Tables from './pages/Tables';
 function App() {
   const { user,selected } = useContext(OverallContext);
   
@@ -44,6 +45,7 @@ function App() {
                 {selected === 'sprints' && <Sprints/>}
                 {selected === 'task_current' && <MyTasks/>}
                 {selected === 'performancereviews' && <PerformanceReview/>}
+                {selected === 'tables' && <Tables/>}
               <Routes>
 
                
@@ -59,4 +61,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 

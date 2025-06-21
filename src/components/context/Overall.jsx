@@ -1,4 +1,3 @@
-import React from 'react'
 import { createContext, useState } from "react";
 
 export const OverallContext = createContext();
@@ -9,6 +8,7 @@ export const OverallContextProvider = ({ children }) => {
         role: "employee",
         id: ""
     });
+    const [role,setRole] = useState(null);
     const [selected, setSelected] = useState("overview"); 
     const [openSidebar, setOpenSidebar] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false); // for user update profile
@@ -22,15 +22,17 @@ export const OverallContextProvider = ({ children }) => {
     const [isAddEmployeeModalOpen, setIsAddEmployeeModalOpen] = useState(false);
     const [taskLogData, setTaskLogData] = useState([]); // for storing task log data
     const [selectedTemplate, setSelectedTemplate] = useState('/templates/resume.pdf'); // for storing selected template data
+    const [selectedDoc,setSelectedDoc] = useState(null);
     const [sprints,setSprints] = useState([]);
     const [myTasks,setMyTasks] = useState({});
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [postRequestBody,setPostRequestBody] = useState({})   //will be used for sending post requests
+   
     
 
   
   return (
-    <OverallContext.Provider value={{postRequestBody,setPostRequestBody,showReviewModal, setShowReviewModal,myTasks,setMyTasks,sprints,setSprints,isAddEmployeeModalOpen, setIsAddEmployeeModalOpen,taskLogData,setTaskLogData,employeeData,setEmployeeData,viewTask, setViewTask,user,setUser,selected, setSelected,openSidebar, setOpenSidebar,isModalOpen, setIsModalOpen,reviewModal,setReviewModal,currentReviewData, setCurrentReviewData,openCTaskModal, setOpenCTaskModal,taskData, setTaskData,reviewTask,setreviewTask,selectedTemplate,setSelectedTemplate}}>
+    <OverallContext.Provider value={{role,setRole,selectedDoc,setSelectedDoc,postRequestBody,setPostRequestBody,showReviewModal, setShowReviewModal,myTasks,setMyTasks,sprints,setSprints,isAddEmployeeModalOpen, setIsAddEmployeeModalOpen,taskLogData,setTaskLogData,employeeData,setEmployeeData,viewTask, setViewTask,user,setUser,selected, setSelected,openSidebar, setOpenSidebar,isModalOpen, setIsModalOpen,reviewModal,setReviewModal,currentReviewData, setCurrentReviewData,openCTaskModal, setOpenCTaskModal,taskData, setTaskData,reviewTask,setreviewTask,selectedTemplate,setSelectedTemplate}}>
       {children}
     </OverallContext.Provider>
   );

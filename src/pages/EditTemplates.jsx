@@ -8,9 +8,12 @@ import PDFViewer from "../components/reusable/PdfViewer";
 import SectionBlock from "../components/reusable/SectionBlock";
 import FolderList from "../components/blocks/FolderList";
 
-const EditTemplates = ({ modalTitle = "Scope Code Documentation Template" }) => {
+const EditTemplates = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isFolderListOpen, setIsFolderListOpen] = useState(false);
+  const {selectedTemplate,setSelectedTemplate} = useContext(OverallContext);
+  const [searchQuery, setSearchQuery] = useState("");
+
   
   const modalRef = useRef(null);
   const folderListRef = useRef(null);
@@ -54,25 +57,35 @@ const EditTemplates = ({ modalTitle = "Scope Code Documentation Template" }) => 
 
 
   const name = "resume.pdf"; 
-  const list_items = [
-    { icon: <FaClipboardList />, label: 'Template List', active: true },
-    { label: 'Templates', name},
-    { label: 'My Tasks',name },
-    { label: 'Docs',name },
-    { label: 'Employee List',name },
-    { label: 'Sprints',name },
-    { label: 'Task Back Log',name },
-  ];
+ const filteredTemplates = [
+  { label: "Templates", name },
+  { label: "My Tasks", name },
+  { label: "Docs", name },
+  { label: "Employee List", name },
+  { label: "Sprints", name },
+  { label: "Task Back Log", name },
+].filter(item =>
+  item.label.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
+const list_items = [
+  { icon: <FaClipboardList />, label: "Template List", active: true },
+  ...filteredTemplates.map(item => ({
+    ...item,
+    icon: <FaClipboardList />,
+    active: item.name === selectedTemplate,
+    onClick: () => setSelectedTemplate(item.name)
+  }))
+];
   
-  const {selectedTemplate} = useContext(OverallContext);
   const openModal = () => setIsModalOpen(true);
   const handleSubmit = () => {
     setIsFolderListOpen(true);
   }
 
   return (
-    <div className="min-h-screen flex bg-gray-100 ml-[255px] -mt-8  p-8 overflow-hidden">
-      <Sidebar items={list_items} />
+    <div className="min-h-fit flex bg-gray-100 ml-[255px] -mt-8  p-6 overflow-hidden">
+      <Sidebar items={list_items} selected={selectedTemplate} setSelected={setSelectedTemplate} />
       
       <div className="flex-1 flex flex-col">
         <div className="bg-white p-4 flex justify-between items-center mb-6 ">
@@ -86,6 +99,7 @@ const EditTemplates = ({ modalTitle = "Scope Code Documentation Template" }) => 
               type="text" 
               className="bg-gray-200 rounded-xl pl-10 pr-4 py-2 w-full text-xs" 
               placeholder="Search for templates by name"
+              onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <button 
@@ -98,7 +112,7 @@ const EditTemplates = ({ modalTitle = "Scope Code Documentation Template" }) => 
         </div>
         
         {/* PDF Viewer Section */}
-        <div className="flex-1 bg-white p-4 rounded-lg shadow-sm">
+        <div className="flex-1 bg-white  rounded-lg shadow-sm">
           <PDFViewer fileName={selectedTemplate} />
         </div>
         

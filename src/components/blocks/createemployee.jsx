@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import employeeIcon from "../../assets/employee.png";
 import userGroup from "../../assets/userGroup.png";
 import star from "../../assets/star.png";
@@ -7,8 +7,10 @@ import shield from "../../assets/shield.png";
 import idIcon from "../../assets/idIcon.png";
 import chevron from "../../assets/chevron-down.png";
 import arrowRight from "../../assets/chevron-right.png";
-import plus from "../../assets/plus.png";
-import { OverallContext } from "../context/Overall";
+import { FaPlus } from "react-icons/fa";
+import useApi from "../hooks/useApi";
+
+
 
 const InputField = ({ label, placeholder, icon, value, onChange, type = "text", name, required = false }) => (
   <div className="flex flex-col gap-1">
@@ -29,30 +31,60 @@ const InputField = ({ label, placeholder, icon, value, onChange, type = "text", 
   </div>
 );
 
-const CreateEmployeeModal = ({ onAddEmployee }) => {
+const CreateEmployeeModal = ({ onAddEmployee,isAddEmployeeModalOpen,setIsAddEmployeeModalOpen }) => {
   const [formData, setFormData] = useState({
-    id: Date.now(), // Generate a unique ID
+    
     role: "",
     name: "",
     department: "",
-    probationPeriod: "",
+    // probationPeriod: "",
     email: "",
     password: "",
-    status: "Active" // Default status
+    status: "Non Active" // Default status
   });
+  const { request, loading, error } = useApi();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
+  if (!validateForm()) return;
+
+  const payload = {
+    username: formData.name+"-x", 
+    email: formData.email,
+    password: formData.password,
+    role: formData.role.toLowerCase(), // formatting
+     department: formData.department,
+     probationPeriod: formData.probationPeriod,
+    status: formData.status,
+    name: formData.name
+  };
+
+  const res = await request({
+    endpoint: "/create-user/", // <-- Replace with actual endpoint
+    method: "POST",
+    body: payload,
+  });
+
+  if (res) {
+    onAddEmployee(res); // Optional: push the new employee to state
+    setIsAddEmployeeModalOpen(false);
+  }
+};
+
   
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
   const [showDepartmentDropdown, setShowDepartmentDropdown] = useState(false);
   const [errors, setErrors] = useState({});
-  const {isAddEmployeeModalOpen,setIsAddEmployeeModalOpen} = useContext(OverallContext);
+  const [showStatusDropdown, setShowStatusDropdown] = useState(false);
+  
+
+
 
   
   const roles = [
-    "Employee",
-    "Manager",
-    "Administrator",
-    "Supervisor",
-    "Team Lead"
+    "employee",
+    "intern",
+    "admin",
+    "executive"
   ];
 
   const departments = [
@@ -112,15 +144,18 @@ const CreateEmployeeModal = ({ onAddEmployee }) => {
       setErrors(prev => ({ ...prev, department: undefined }));
     }
   };
+  const handleStatusSelect = (status) => {
+  setFormData(prev => ({
+    ...prev,
+    status
+  }));
+  setShowStatusDropdown(false);
+  if (errors.status) {
+    setErrors(prev => ({ ...prev, status: undefined }));
+  }
+};
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      onAddEmployee({...formData,status: "Active"});
-      console.log(formData);
-      setIsAddEmployeeModalOpen(false)
-    }
-  };
+
 
   return (
     isAddEmployeeModalOpen && 
@@ -131,7 +166,7 @@ const CreateEmployeeModal = ({ onAddEmployee }) => {
           <img src={employeeIcon} className="w-6 h-6" alt="Employee" />
           <h2 className="text-xl font-semibold text-black">Create Employee</h2>
         </div>
-        <button onClick={()=>{setIsAddEmployeeModalOpen(false)}}className="hover:bg-gray-100 p-1 rounded">
+        <button onClick={()=>{setIsAddEmployeeModalOpen(false)}}className="hover:bg-gray-100 p-1 rounded" disabled={loading}>
           <img src={arrowRight} className="w-6 h-6" alt="Close" />
         </button>
       </div>
@@ -243,17 +278,49 @@ const CreateEmployeeModal = ({ onAddEmployee }) => {
             </div>
           </div>
           
-          {/* Probation Period */}
-          <InputField 
-            label="Probation Period" 
-            placeholder="Enter In numeric Weeks. Eg 1, 2, 3" 
-            icon={shield} 
-            name="probationPeriod"
-            value={formData.probationPeriod}
-            onChange={handleChange}
-            type="number"
-            min="0"
-          />
+        {/* Status Dropdown */}
+<div className="relative">
+  <label className="text-base font-semibold text-black flex items-center gap-2 mb-1">
+    <img src={shield} className="w-5 h-5" alt="Status" />
+    Status <span className="text-red-500">*</span>
+  </label>
+  <div className="relative">
+    <input
+      type="text"
+      placeholder="Eg. Active"
+      className={`bg-gray-50 px-4 py-3 rounded-xl text-xs font-semibold text-gray-500 w-full cursor-pointer border ${
+        errors.status ? "border-red-500" : "border-gray-200"
+      }`}
+      value={formData.status}
+      onClick={() => setShowStatusDropdown((prev) => !prev)}
+      readOnly
+    />
+    <img 
+      src={chevron} 
+      className="w-5 h-5 absolute right-3 top-3 cursor-pointer" 
+      onClick={() => setShowStatusDropdown((prev) => !prev)}
+      alt="Toggle dropdown"
+    />
+    {errors.status && (
+      <p className="text-red-500 text-xs mt-1">{errors.status}</p>
+    )}
+
+    {showStatusDropdown && (
+      <div className="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-auto">
+        {["Active", "Non active"].map((status) => (
+          <div
+            key={status}
+            className="px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm capitalize"
+            onClick={() => handleStatusSelect(status)}
+          >
+            {status}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+</div>
+
         </div>
 
         {/* Email and Password */}
@@ -298,7 +365,7 @@ const CreateEmployeeModal = ({ onAddEmployee }) => {
             type="submit"
             className="flex items-center gap-2 px-5 py-3 rounded-xl bg-red-700 text-white font-semibold text-xs hover:bg-red-800 transition-colors"
           >
-            <img src={plus} className="w-5 h-5" alt="Add" />
+            <FaPlus className="w-5 h-5" alt="Add" />
             Add Employee
           </button>
         </div>
