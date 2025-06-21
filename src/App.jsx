@@ -4,7 +4,7 @@ import EmployeeSidebar from './components/sidebarEmp';
 import Navbar from './components/navbar';
 import React, { useContext } from 'react';
 import { OverallContext } from './components/context/Overall';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Dashboard from './pages/home';
 import LoginComponent from './pages/login';
 import UserUpdate from './components/blocks/userupdate'
@@ -20,47 +20,66 @@ import Sprints from './pages/Sprints';
 import MyTasks from './pages/MyTasks';
 import PerformanceReview from './pages/PerformanceReview';
 import Tables from './pages/Tables';
+
 function App() {
-  const { user,selected } = useContext(OverallContext);
+  const { user, selected } = useContext(OverallContext);
+  const loggedIn = localStorage.getItem('session_token');
   
   return (
     <Router>
       <div className="flex flex-col min-h-screen h-screen bg-gray-50">
         {/* Fixed height navbar */}
-        <Navbar />
+        {loggedIn && <Navbar />}
         
         <div className="flex flex-1 relative bg-gray-50 overflow-hidden">
           {/* Sidebar */}
-          {user.role === 'admin' ? <AdminSidebar /> : <EmployeeSidebar />}
+          {loggedIn && (user.role === 'admin' ? <AdminSidebar /> : <EmployeeSidebar />)}
           
           {/* Main content area */}
-      <main className="flex-1 overflow-auto">
-  <div className="">
-    <UserUpdate /><ViewReviewModal /><SeeTask /><CreateReview /><CreateTaskModal />
+          <main className="flex-1 overflow-auto">
+            <div className="">
+              {loggedIn && (
+                <>
+                  <UserUpdate />
+                  <ViewReviewModal />
+                  <SeeTask />
+                  <CreateReview />
+                  <CreateTaskModal />
+                </>
+              )}
 
-    <Routes>
-      <Route path="/login" element={<LoginComponent />} />
-    </Routes>
-
-    {/* Conditional rendering based on `selected` value */}
-    {selected === 'overview' && <Dashboard />}
-    {selected === 'employeeList' && <EmployeeList />}
-    {selected === 'tasks' && <TaskBackLog />}
-    {selected === 'templates' && <EditTemplates />}
-    {selected === 'docs' && <Docs />}
-    {selected === 'sprints' && <Sprints />}
-    {selected === 'task_current' && <MyTasks />}
-    {selected === 'performancereviews' && <PerformanceReview />}
-    {selected === 'tables' && <Tables />}
-  </div>
-</main>
-
-           
+              <Routes>
+                <Route 
+                  path="/login" 
+                  element={loggedIn ? <Navigate to="/" /> : <LoginComponent />} 
+                />
+                <Route 
+                  path="*" 
+                  element={
+                    loggedIn ? (
+                      <>
+                        {selected === 'overview' && <Dashboard />}
+                        {selected === 'employeeList' && <EmployeeList />}
+                        {selected === 'tasks' && <TaskBackLog />}
+                        {selected === 'templates' && <EditTemplates />}
+                        {selected === 'docs' && <Docs />}
+                        {selected === 'sprints' && <Sprints />}
+                        {selected === 'task_current' && <MyTasks />}
+                        {selected === 'performancereviews' && <PerformanceReview />}
+                        {selected === 'tables' && <Tables />}
+                      </>
+                    ) : (
+                      <Navigate to="/login" replace />
+                    )
+                  } 
+                />
+              </Routes>
+            </div>
+          </main>
         </div>
-       
       </div>
     </Router>
   );
 }
 
-export default App; 
+export default App;

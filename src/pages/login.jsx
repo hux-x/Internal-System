@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import loginImg from '../assets/login.png'; // Ensure you have an image at this path
+import useApi from '../components/hooks/useApi';
+
 
 export default function LoginComponent() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const {request,loading} = useApi();
 
-  const handleSubmit = (e) => {
+  
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Login attempted with:', { email, password, rememberMe });
+    await request({ endpoint: '/login/', method: 'POST', body: { email, password } });
+
+    
   };
 
   return (

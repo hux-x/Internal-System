@@ -6,7 +6,7 @@ import { OverallContext } from './context/Overall';
 import { getSidebarItemClass } from './utils/fuctions';
 import { useNavigate } from 'react-router-dom';
 const Sidebar = () => {
-  const {selected, setSelected,user,openSidebar} = useContext(OverallContext);
+  const {selected, setSelected,user,openSidebar,role} = useContext(OverallContext);
   const navigate = useNavigate();
   return (<>
    {openSidebar && (<aside className={`absolute top-0 left-0 h-full bg-white shadow-lg border-r z-20 p-5 flex flex-col justify-between transform transition-transform duration-300 ease-in-out
@@ -28,9 +28,11 @@ const Sidebar = () => {
           <div onClick={() => setSelected("docs")} className={getSidebarItemClass("docs",selected)}>
             <FaBook /> Docs
           </div>
-          <div onClick={() => setSelected("employeeList")} className={getSidebarItemClass("employeeList",selected)}>
+          {
+            role ==='admin' && <div onClick={() => setSelected("employeeList")} className={getSidebarItemClass("employeeList",selected)}>
             <HiCollection  size={18}/> Employee List
           </div>
+          }
           
           <div onClick={() => setSelected("sprints")} className={getSidebarItemClass("sprints",selected)}>
             <HiCollection  size={18}/> Sprints
