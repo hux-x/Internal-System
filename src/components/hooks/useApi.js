@@ -5,9 +5,11 @@ import { OverallContext } from '../context/Overall';
 const BASE_URL = 'http://localhost:5000/api';
 
 const useApi = () => {
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const {role,setRole} = useContext(OverallContext)
+  //setRole(userRole)
   
 
   const request = useCallback(async ({ endpoint, method = 'GET', headers = {}, body = null, params = {} }) => {
@@ -24,7 +26,7 @@ const useApi = () => {
         method,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization':  `Token ${session_token}`,
+          'Authorization':  `Token 9219a6158cbecde4edf04fcc7af5245ca47b01ba`,
           ...headers,
         },
         body: body ? JSON.stringify(body) : null,

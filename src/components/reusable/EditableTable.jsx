@@ -17,7 +17,7 @@ const EditableTable = ({ table, onCellChange, onCellBlur, onColumnNameChange }) 
   const columnCount = table.columns.length;
 
   return (
-    <div className="overflow-auto bg-white rounded-lg shadow p-4">
+    <div className="overflow-auto bg-white rounded-lg shadow p-4 h-[81vh]">
       <h2 className="text-2xl font-bold mb-4">{table.name}</h2>
 
       <table className="w-full table-fixed border border-collapse">
