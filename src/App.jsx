@@ -34,25 +34,27 @@ function App() {
           {user.role === 'admin' ? <AdminSidebar /> : <EmployeeSidebar />}
           
           {/* Main content area */}
-          <main className="flex-1 overflow-auto">
-            <div className="">
-            <UserUpdate/><ViewReviewModal/><SeeTask/><CreateReview/><CreateTaskModal/>  {/* Overlay components create review for execs and employees only*/}
-             {selected === 'overview' && <Dashboard />}
-                {selected === 'employeeList' &&  <EmployeeList />}
-                {selected === 'tasks' &&  <TaskBackLog />}
-                {selected === 'templates' && <EditTemplates/>}
-                {selected === 'docs' && <Docs/>}
-                {selected === 'sprints' && <Sprints/>}
-                {selected === 'task_current' && <MyTasks/>}
-                {selected === 'performancereviews' && <PerformanceReview/>}
-                {selected === 'tables' && <Tables/>}
-              <Routes>
+      <main className="flex-1 overflow-auto">
+  <div className="">
+    <UserUpdate /><ViewReviewModal /><SeeTask /><CreateReview /><CreateTaskModal />
 
-               
-                <Route path="/login" element={<LoginComponent />} />
-              </Routes>
-            </div>
-          </main>
+    <Routes>
+      <Route path="/login" element={<LoginComponent />} />
+    </Routes>
+
+    {/* Conditional rendering based on `selected` value */}
+    {selected === 'overview' && <Dashboard />}
+    {selected === 'employeeList' && <EmployeeList />}
+    {selected === 'tasks' && <TaskBackLog />}
+    {selected === 'templates' && <EditTemplates />}
+    {selected === 'docs' && <Docs />}
+    {selected === 'sprints' && <Sprints />}
+    {selected === 'task_current' && <MyTasks />}
+    {selected === 'performancereviews' && <PerformanceReview />}
+    {selected === 'tables' && <Tables />}
+  </div>
+</main>
+
            
         </div>
        

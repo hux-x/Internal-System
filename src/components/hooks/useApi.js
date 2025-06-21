@@ -2,7 +2,7 @@ import { useState, useCallback, useContext } from 'react';
 import { OverallContext } from '../context/Overall';
 
 
-const BASE_URL = 'https://affan2493.pythonanywhere.com/api';
+const BASE_URL = 'http://localhost:5000/api';
 
 const useApi = () => {
   const [loading, setLoading] = useState(false);

@@ -1,11 +1,13 @@
 import { useState } from "react";
 
-const EditableTable = ({ table, onCellChange, onColumnNameChange }) => {
+const EditableTable = ({ table, onCellChange, onCellBlur, onColumnNameChange }) => {
   const [editingCell, setEditingCell] = useState(null); // { row, col }
-  const [editingCol, setEditingCol] = useState(null);   // index of column being edited
+  const [editingValue, setEditingValue] = useState("");
+  const [editingCol, setEditingCol] = useState(null);
 
   const handleDoubleClick = (rowIdx, colIdx) => {
     setEditingCell({ row: rowIdx, col: colIdx });
+    setEditingValue(table.data[rowIdx][colIdx]);
   };
 
   const handleColDoubleClick = (colIdx) => {
@@ -13,7 +15,6 @@ const EditableTable = ({ table, onCellChange, onColumnNameChange }) => {
   };
 
   const columnCount = table.columns.length;
-  const columnWidth = `w-[${100 / columnCount}%]`; // dynamic width string for columns
 
   return (
     <div className="overflow-auto bg-white rounded-lg shadow p-4">
@@ -25,7 +26,7 @@ const EditableTable = ({ table, onCellChange, onColumnNameChange }) => {
             <col key={idx} style={{ width: `${100 / columnCount}%` }} />
           ))}
         </colgroup>
-        
+
         <thead>
           <tr>
             {table.columns.map((colName, colIdx) => (
@@ -53,7 +54,7 @@ const EditableTable = ({ table, onCellChange, onColumnNameChange }) => {
 
         <tbody>
           {table.data.map((row, rowIdx) => (
-            <tr key={rowIdx} className="p-2">
+            <tr key={rowIdx}>
               {row.map((cell, colIdx) => (
                 <td
                   key={colIdx}
@@ -64,9 +65,15 @@ const EditableTable = ({ table, onCellChange, onColumnNameChange }) => {
                     <input
                       type="text"
                       className="w-full border rounded p-1 text-sm"
-                      value={cell}
-                      onChange={(e) => onCellChange(rowIdx, colIdx, e.target.value)}
-                      onBlur={() => setEditingCell(null)}
+                      value={editingValue}
+                      onChange={(e) => setEditingValue(e.target.value)}
+                      onBlur={() => {
+                        if (editingValue !== table.data[rowIdx][colIdx]) {
+                          onCellChange(rowIdx, colIdx, editingValue); // local
+                          onCellBlur(rowIdx, colIdx, editingValue);   // server
+                        }
+                        setEditingCell(null);
+                      }}
                       autoFocus
                     />
                   ) : (
