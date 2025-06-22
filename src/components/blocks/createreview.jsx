@@ -3,8 +3,7 @@ import { ArrowRight, User2, ClipboardList, AlertTriangle, Star, Hash, X } from '
 import { FaCheckCircle } from 'react-icons/fa';
 import { OverallContext } from '../context/Overall';
 import { checklistLabels } from '../utils/demo_data';
-import useReviewApi from '../hooks/useReview'; // Import the hook we created
-
+import useReviewApi from '../hooks/useReview';
 
 const CreateReview = () => {
   const { setreviewTask, user, reviewTask } = useContext(OverallContext);
@@ -12,12 +11,27 @@ const CreateReview = () => {
   
   const [formData, setFormData] = useState({
     type: '',
-    score: '',
     ticket_reference: '',
     module_name: '',
     pr_link: '',
     status: 'pending',
     reviewer_comments: '',
+    // Performance review scores
+    score_ownership: '',
+    score_quality: '',
+    score_communication: '',
+    score_learning: '',
+    score_team_fit: '',
+    // Performance review text fields
+    proud_of: '',
+    main_contributions: '',
+    learnings: '',
+    blockers: '',
+    self_improvement: '',
+    next_goals: '',
+    support_needed: '',
+    open_notes: '',
+    // Common fields
     check_list: Object.fromEntries(checklistLabels.map(label => [label, false])),
     action_items: []
   });
@@ -63,37 +77,81 @@ const CreateReview = () => {
   const handleSubmit = async () => {
     // Basic validation
     if (!formData.type) {
-      console.log('Please select a review type');
+      alert('Please select a review type');
       return;
     }
 
     if (formData.type === 'TI' && !formData.ticket_reference) {
-      console.log('Ticket reference is required for ticket reviews');
+      alert('Ticket reference is required for ticket reviews');
       return;
+    }
+
+    if (formData.type === 'PR') {
+      const requiredScores = [
+        'score_ownership',
+        'score_quality',
+        'score_communication',
+        'score_learning',
+        'score_team_fit'
+      ];
+      
+      const missingScores = requiredScores.filter(score => !formData[score]);
+      if (missingScores.length > 0) {
+        alert(`Please provide all performance scores: ${missingScores.join(', ').replace(/score_/g, '')}`);
+        return;
+      }
     }
 
     try {
       const reviewData = {
-        reviewee: user.id, // Assuming user object has id
-        type: formData.type === 'Ticket' ? 'TI' : 'PR', // Map to backend values
-        ...formData,
-        action_items: formData.action_items,
-        check_list: formData.check_list
+        reviewee: user.id,
+        type: formData.type,
+        ...formData
       };
-
+      console.log(reviewData)
       const response = await createReview(reviewData);
       
+      
+      
       if (response) {
-        console.log('Review created successfully!');
+        alert('Review created successfully!');
         close();
+        // Reset form
+        setFormData({
+          type: '',
+          ticket_reference: '',
+          module_name: '',
+          pr_link: '',
+          status: 'pending',
+          reviewer_comments: '',
+          score_ownership: '',
+          score_quality: '',
+          score_communication: '',
+          score_learning: '',
+          score_team_fit: '',
+          proud_of: '',
+          main_contributions: '',
+          learnings: '',
+          blockers: '',
+          self_improvement: '',
+          next_goals: '',
+          support_needed: '',
+          open_notes: '',
+          check_list: Object.fromEntries(checklistLabels.map(label => [label, false])),
+          action_items: []
+        });
       }
     } catch (err) {
-      console.log(err || 'Failed to create review');
+      alert(err.message || 'Failed to create review');
     }
   };
 
   const updateFormField = (field) => (e) => {
     setFormData({ ...formData, [field]: e.target.value });
+  };
+
+  const updateScoreField = (field, value) => {
+    setFormData({ ...formData, [field]: value });
   };
 
   return (
@@ -196,21 +254,60 @@ const CreateReview = () => {
                 )}
 
                 {formData.type === 'PR' && (
-                  <div>
-                    <label className="flex items-center gap-2 mb-1 font-medium">
-                      <Star className="w-4 h-4" /> Overall Score
-                    </label>
-                    <select
-                      value={formData.score}
-                      onChange={updateFormField('score')}
-                      className="w-full bg-gray-100 rounded-xl px-4 py-2"
-                    >
-                      <option value="" disabled>Select score</option>
-                      {[1, 2, 3, 4, 5].map(num => (
-                        <option key={num} value={num}>{num}</option>
+                  <>
+                    <div className="space-y-3">
+                      <h4 className="flex items-center gap-2 font-medium">
+                        <Star className="w-4 h-4" /> Performance Scores (1-5)
+                      </h4>
+                      {[
+                        { field: 'score_ownership', label: 'Ownership' },
+                        { field: 'score_quality', label: 'Quality' },
+                        { field: 'score_communication', label: 'Communication' },
+                        { field: 'score_learning', label: 'Learning' },
+                        { field: 'score_team_fit', label: 'Team Fit' }
+                      ].map(({ field, label }) => (
+                        <div key={field} className="flex items-center justify-between">
+                          <span>{label}:</span>
+                          <select
+                            value={formData[field] || ''}
+                            onChange={(e) => updateScoreField(field, e.target.value)}
+                            className="bg-gray-100 rounded-xl px-3 py-1"
+                          >
+                            <option value="" disabled>Select</option>
+                            {[1, 2, 3, 4, 5].map(num => (
+                              <option key={num} value={num}>{num}</option>
+                            ))}
+                          </select>
+                        </div>
                       ))}
-                    </select>
-                  </div>
+                    </div>
+
+                    <div>
+                      <label className="flex items-center gap-2 mb-1 font-medium">
+                        <ClipboardList className="w-4 h-4" /> Proud Of
+                      </label>
+                      <textarea
+                        value={formData.proud_of}
+                        onChange={updateFormField('proud_of')}
+                        rows={2}
+                        className="w-full bg-gray-100 rounded-xl p-2 text-sm"
+                        placeholder="What are you proud of?"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="flex items-center gap-2 mb-1 font-medium">
+                        <ClipboardList className="w-4 h-4" /> Main Contributions
+                      </label>
+                      <textarea
+                        value={formData.main_contributions}
+                        onChange={updateFormField('main_contributions')}
+                        rows={2}
+                        className="w-full bg-gray-100 rounded-xl p-2 text-sm"
+                        placeholder="What were your main contributions?"
+                      />
+                    </div>
+                  </>
                 )}
 
                 <div>
