@@ -57,7 +57,7 @@ const PerformanceReviews = ({ editable = true, open, action = () => {}}) => {
             <form className="flex-1 flex flex-col overflow-hidden" onSubmit={handleSubmit}>
               {/* Header */}
               <div className="flex justify-between items-start p-10 pb-4">
-                <h1 className="text-4xl font-bold">Performance Reviews ==== ONLY FOR TESTING ====</h1>
+                <h1 className="text-4xl font-bold">Performance Reviews ===ONLY FOR TESTING===</h1>
                 {editable ? (
                   <button
                     type="submit"
