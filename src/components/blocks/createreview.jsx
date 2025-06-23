@@ -3,6 +3,7 @@ import { User2, ClipboardList, AlertTriangle, Star, Hash, X } from 'lucide-react
 import { OverallContext } from '../context/Overall';
 import { checklistLabels } from '../utils/demo_data';
 import useReviewApi from '../hooks/useReview';
+import chevronRgith from '../../assets/chevron-right.png'
 
 const CreateReview = () => {
   const { setreviewTask, reviewTask } = useContext(OverallContext);
@@ -164,9 +165,9 @@ const CreateReview = () => {
             <div className="flex items-center justify-between px-8 py-4 border-b">
               <div className="flex items-center gap-2">
                 <User2 className="w-5 h-5" />
-                <h2 className="text-xl font-semibold">Create Review</h2>
+                <h2 className="text-xl font-semibold">Review Task</h2>
               </div>
-              <X className="h-6 w-6 cursor-pointer" onClick={close} />
+              <img src={chevronRgith} className="h-6 w-6 cursor-pointer" onClick={close} />
             </div>
 
             <div className="flex flex-col md:flex-row px-8 py-6 gap-8">
