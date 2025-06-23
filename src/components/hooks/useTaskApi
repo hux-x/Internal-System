@@ -1,0 +1,37 @@
+import useApi from './useApi';
+
+export const useTicketApi = () => {
+  const { request, loading, error } = useApi();
+
+  const createTicket = async (ticketData) => {
+    return await request({
+      endpoint: '/tickets/',
+      method: 'POST',
+      body: ticketData,
+    });
+  };
+
+  const updateTicket = async (ticketId, updateData) => {
+    return await request({
+      endpoint: `/tickets/${ticketId}/`,
+      method: 'PATCH',
+      body: updateData,
+    });
+  };
+
+  const getTickets = async (filters = {}) => {
+    return await request({
+      endpoint: '/tickets/',
+      method: 'GET',
+      params: filters,
+    });
+  };
+
+  return {
+    createTicket,
+    updateTicket,
+    getTickets,
+    loading,
+    error,
+  };
+};

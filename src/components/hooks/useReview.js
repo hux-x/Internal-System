@@ -7,7 +7,7 @@ const useReviewApi = () => {
   // Create a new review
   const createReview = useCallback(async (reviewData) => {
     return await request({
-      endpoint: '/reviews/create-review/',
+      endpoint: '/api/reviews/create',  // Added '/api' prefix
       method: 'POST',
       body: reviewData
     });
@@ -19,7 +19,7 @@ const useReviewApi = () => {
       throw new Error("Invalid review type. Must be 'TI', 'PR', or 'TS'");
     }
     return await request({
-      endpoint: '/reviews/',
+      endpoint: '/api/reviews',  // Added '/api' prefix and removed trailing slash
       params: { type }
     });
   }, [request]);
@@ -27,14 +27,14 @@ const useReviewApi = () => {
   // Get a single review by ID
   const getReview = useCallback(async (id) => {
     return await request({
-      endpoint: `/reviews/${id}/`
+      endpoint: `/api/reviews/${id}`  // Added '/api' prefix and removed trailing slash
     });
   }, [request]);
 
   // Update a review
   const updateReview = useCallback(async (id, updateData) => {
     return await request({
-      endpoint: `/reviews/${id}/`,
+      endpoint: `/api/reviews/${id}`,  // Added '/api' prefix and removed trailing slash
       method: 'PUT',
       body: updateData
     });
@@ -43,7 +43,7 @@ const useReviewApi = () => {
   // Delete a review
   const deleteReview = useCallback(async (id) => {
     return await request({
-      endpoint: `/reviews/${id}/`,
+      endpoint: `/api/reviews/${id}`,  // Added '/api' prefix and removed trailing slash
       method: 'DELETE'
     });
   }, [request]);

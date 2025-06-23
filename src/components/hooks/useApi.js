@@ -3,7 +3,7 @@ import { OverallContext } from '../context/Overall';
 import { useNavigate } from 'react-router-dom';
 
 
-const BASE_URL = 'https://affan2493.pythonanywhere.com/api';
+const BASE_URL = 'http://localhost:5002/api';
 
 const useApi = () => {
   
