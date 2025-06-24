@@ -27,12 +27,13 @@ export const OverallContextProvider = ({ children }) => {
     const [myTasks,setMyTasks] = useState({});
     const [showReviewModal, setShowReviewModal] = useState(false);
     const [postRequestBody,setPostRequestBody] = useState({})   //will be used for sending post requests
+     const [isPerformanceModalOpen,setIsPerformanceModalOpen] = useState(false);
    
     
 
   
   return (
-    <OverallContext.Provider value={{role,setRole,selectedDoc,setSelectedDoc,postRequestBody,setPostRequestBody,showReviewModal, setShowReviewModal,myTasks,setMyTasks,sprints,setSprints,isAddEmployeeModalOpen, setIsAddEmployeeModalOpen,taskLogData,setTaskLogData,employeeData,setEmployeeData,viewTask, setViewTask,user,setUser,selected, setSelected,openSidebar, setOpenSidebar,isModalOpen, setIsModalOpen,reviewModal,setReviewModal,currentReviewData, setCurrentReviewData,openCTaskModal, setOpenCTaskModal,taskData, setTaskData,reviewTask,setreviewTask,selectedTemplate,setSelectedTemplate}}>
+    <OverallContext.Provider value={{isPerformanceModalOpen,setIsPerformanceModalOpen,role,setRole,selectedDoc,setSelectedDoc,postRequestBody,setPostRequestBody,showReviewModal, setShowReviewModal,myTasks,setMyTasks,sprints,setSprints,isAddEmployeeModalOpen, setIsAddEmployeeModalOpen,taskLogData,setTaskLogData,employeeData,setEmployeeData,viewTask, setViewTask,user,setUser,selected, setSelected,openSidebar, setOpenSidebar,isModalOpen, setIsModalOpen,reviewModal,setReviewModal,currentReviewData, setCurrentReviewData,openCTaskModal, setOpenCTaskModal,taskData, setTaskData,reviewTask,setreviewTask,selectedTemplate,setSelectedTemplate}}>
       {children}
     </OverallContext.Provider>
   );

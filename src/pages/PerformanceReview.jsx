@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import sideImage from '../assets/performance-review.png';
 import PerformanceReviewModal from '../components/blocks/PerformanceReviewModal'; // takes `open` (state) and `close` (func)
+import { OverallContext } from '../components/context/Overall';
 
 const PerformanceReviews = ({ editable = false }) => {
   const commonClasses = 'bg-gray-100 p-6 rounded-xl text-gray-500 text-sm flex-1 min-h-[100px] w-[60vw] mb-2';
@@ -33,7 +34,7 @@ const PerformanceReviews = ({ editable = false }) => {
     score_team_fit: 5
   });
 
-  const [open, setOpen] = useState(false);
+  const {isPerformanceModalOpen:open,setIsPerformanceModalOpen: setOpen} = useContext(OverallContext)
   const handleClose = () => {
     setOpen(false);
   };
